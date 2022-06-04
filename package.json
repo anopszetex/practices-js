@@ -1,0 +1,25 @@
+{
+  "name": "practices",
+  "version": "1.0.0",
+  "description": "some tests and practices basic with js",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --config ./jest.config.js --watchAll",
+    "test:cov": "NODE_OPTIONS=--experimental-vm-modules npx jest --config ./jest.config.js --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anopszetex/practices-js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anopszetex/practices-js/issues"
+  },
+  "homepage": "https://github.com/anopszetex/practices-js#readme",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
+}
