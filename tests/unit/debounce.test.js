@@ -3,7 +3,7 @@ import { jest } from '@jest/globals';
 
 jest.useFakeTimers();
 
-describe('Name of the group', () => {
+describe('Utils.debounce', () => {
   const callback = jest.fn();
 
   beforeEach(() => {
@@ -11,7 +11,7 @@ describe('Name of the group', () => {
     callback.mockReset();
   });
 
-  test('debounce', () => {
+  test('should call debounce', () => {
     const debouncedCallback = debounce(callback, 10);
 
     for (let i = 0; i < 20; i++) {
