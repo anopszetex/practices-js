@@ -32,6 +32,25 @@ class MyDate {
     return '🥰'.repeat(this[kItems].length);
   }
 
+  *[Symbol.iterator]() {
+    for (const item of this[kItems]) {
+      yield item;
+    }
+  }
+
+  async *[Symbol.asyncIterator]() {
+    const wait = timeout => {
+      return new Promise((resolve, reject) => {
+        setTimeout(resolve, timeout);
+      });
+    };
+
+    for (const item of this[kItems]) {
+      await wait(3000);
+      yield item.toISOString();
+    }
+  }
+
   get [Symbol.toStringTag]() {
     return 'what 😕';
   }
@@ -47,3 +66,12 @@ assert.deepStrictEqual(
 assert.throws(() => myDate + 1, TypeError('Only string coercion is supported'));
 
 assert.deepStrictEqual(String(myDate), '🥰🥰');
+
+const expectedDates = [new Date(2020, 3, 4), new Date(2020, 2, 5)];
+assert.deepStrictEqual([...myDate], expectedDates);
+
+(async () => {
+  for await (const item of myDate) {
+    console.log(item);
+  }
+})();
