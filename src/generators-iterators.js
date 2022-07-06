@@ -1,3 +1,4 @@
+import { readFile } from 'fs/promises';
 import assert from 'assert';
 
 function* calc(arg) {
@@ -18,15 +19,31 @@ assert.deepStrictEqual(generator.next(), { value: undefined, done: true });
 assert.deepStrictEqual(Array.from(main()), ['hello', 4]);
 assert.deepStrictEqual([...main()], ['hello', 4]);
 
-import { readFile } from 'fs/promises';
-
 function* promisified() {
   yield readFile('generators-iterators.js', 'utf8');
   yield Promise.resolve('ok 🥱');
 }
 
 (async () => {
+  // eslint-disable-next-line no-unused-vars
   const [_, myPromise] = await Promise.all([...promisified()]);
 
   assert.deepStrictEqual(myPromise, 'ok 🥱');
 })();
+
+const obj = {
+  [Symbol.iterator]() {
+    return {
+      items: [1, 2, 3, 4],
+      next() {
+        return {
+          done: this.items.length === 0,
+          value: this.items.pop(),
+        };
+      },
+    };
+  },
+};
+
+assert.deepStrictEqual(Array.from(obj), [4, 3, 2, 1]);
+assert.deepStrictEqual([...obj], [4, 3, 2, 1]);
