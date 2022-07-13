@@ -75,3 +75,48 @@ assert.deepStrictEqual([...myDate], expectedDates);
     console.log(item);
   }
 })();
+
+const kItem = Symbol('kItem');
+
+const ab = {
+  text: 'hello',
+  prototype: null,
+  __proto__: {
+    exec() {
+      throw new Error('💩');
+    },
+  },
+  [kItem]() {
+    return '🥰';
+  },
+};
+
+{
+  assert.rejects(
+    async () => {
+      ab.__proto__.exec();
+    },
+    {
+      message: '💩',
+      name: 'Error',
+    }
+  );
+}
+
+const kHero = Symbol('kHero');
+const _myObj = {
+  [kHero]: 'Batman',
+};
+
+assert.deepStrictEqual(
+  _myObj[kHero],
+  _myObj[Object.getOwnPropertySymbols(_myObj)[0]]
+);
+
+const _myMap = new Map();
+_myMap.set(kItem, 'value_with_symbol');
+
+assert.deepStrictEqual(
+  _myMap.get(_myMap.keys().next().value),
+  'value_with_symbol'
+);
