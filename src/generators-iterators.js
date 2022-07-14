@@ -1,5 +1,11 @@
-import { readFile } from 'fs/promises';
-import assert from 'assert';
+import { readFile } from 'node:fs/promises';
+import assert from 'node:assert';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const absolute = dest => path.join(__dirname, dest);
 
 function* calc(arg) {
   yield arg * 2;
@@ -20,7 +26,7 @@ assert.deepStrictEqual(Array.from(main()), ['hello', 4]);
 assert.deepStrictEqual([...main()], ['hello', 4]);
 
 function* promisified() {
-  yield readFile('generators-iterators.js', 'utf8');
+  yield readFile(absolute('generators-iterators.js'), 'utf8');
   yield Promise.resolve('ok 🥱');
 }
 
