@@ -51,5 +51,40 @@ const obj = {
   },
 };
 
+(async () => {
+  async function mapAsync(list, mapper) {
+    async function* myGen() {
+      for await (const item of list) {
+        yield mapper(item);
+      }
+    }
+
+    const arr = [];
+
+    for await (const item of myGen()) {
+      arr.push(item);
+    }
+
+    return arr;
+  }
+
+  const listPromises = ['🦄', Promise.resolve(1), Promise.resolve(2)];
+
+  const mapper = row => {
+    return row;
+  };
+
+  assert.deepStrictEqual(await mapAsync(listPromises, mapper), ['🦄', 1, 2]);
+})();
+
 assert.deepStrictEqual(Array.from(obj), [4, 3, 2, 1]);
 assert.deepStrictEqual([...obj], [4, 3, 2, 1]);
+
+const medals = new Set(['gold', 'silver', 'bronze']);
+assert.deepStrictEqual([...medals], ['gold', 'silver', 'bronze']);
+
+const medallists = new Map([['Teddy Riner', 33]]);
+
+for (const [judoka, medals] of medallists) {
+  console.log(`${judoka} has won ${medals} medals`);
+}
