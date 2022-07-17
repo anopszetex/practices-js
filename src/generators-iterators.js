@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import assert from 'node:assert';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { setTimeout } from 'node:timers/promises';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -31,8 +32,7 @@ function* promisified() {
 }
 
 (async () => {
-  // eslint-disable-next-line no-unused-vars
-  const [_, myPromise] = await Promise.all([...promisified()]);
+  const [, myPromise] = await Promise.all([...promisified()]);
 
   assert.deepStrictEqual(myPromise, 'ok 🥱');
 })();
@@ -88,3 +88,33 @@ const medallists = new Map([['Teddy Riner', 33]]);
 for (const [judoka, medals] of medallists) {
   console.log(`${judoka} has won ${medals} medals`);
 }
+
+function* generator2() {
+  yield* 'pizza';
+}
+
+assert.deepStrictEqual([...generator2()], ['p', 'i', 'z', 'z', 'a']);
+
+const list = {
+  a: [setTimeout(50, '🌩️'), setTimeout(150, '🌩️'), setTimeout(10000, '🌩️')],
+  async *[Symbol.asyncIterator]() {
+    for (const item of this.a) {
+      yield item;
+    }
+  },
+};
+
+const iterator = list[Symbol.asyncIterator]();
+
+function loop() {
+  iterator.next().then(v => {
+    if (v.done) {
+      return;
+    }
+
+    console.log(v.value);
+    loop();
+  });
+}
+
+loop();
