@@ -95,6 +95,24 @@ function* generator2() {
 
 assert.deepStrictEqual([...generator2()], ['p', 'i', 'z', 'z', 'a']);
 
+const mutableArray = [1, 2, 3];
+
+mutableArray[Symbol.iterator] = function* () {
+  yield 2;
+  yield 2;
+  yield 4;
+};
+
+assert.deepStrictEqual([...mutableArray], [2, 2, 4]);
+
+const fn = (...args) => {
+  return args;
+};
+
+const unMutableArray = Reflect.apply(fn, {}, mutableArray);
+
+assert.deepStrictEqual([...unMutableArray], [1, 2, 3]);
+
 const list = {
   a: [setTimeout(50, '🌩️'), setTimeout(150, '🌩️'), setTimeout(10000, '🌩️')],
   async *[Symbol.asyncIterator]() {
