@@ -136,3 +136,14 @@ function loop() {
 }
 
 loop();
+
+async function* generate() {
+  for (let i = 0; i < 20; i++) {
+    await setTimeout(100);
+    yield i;
+  }
+}
+
+for await (const iterator of generate()) {
+  console.log(iterator);
+}
