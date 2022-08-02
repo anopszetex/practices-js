@@ -143,7 +143,7 @@ async function* generate(fn) {
   for (let i = 0; i < 20; i++) {
     const some = fn(i);
 
-    if (some) {
+    if (some === kStop) {
       console.log('😮 break loop!');
       break;
     }
