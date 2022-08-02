@@ -137,13 +137,33 @@ function loop() {
 
 loop();
 
-async function* generate() {
+const kStop = Symbol('kStop');
+
+async function* generate(fn) {
   for (let i = 0; i < 20; i++) {
+    const some = fn(i);
+
+    if (some) {
+      console.log('😮 break loop!');
+      break;
+    }
+
     await setTimeout(100);
     yield i;
   }
 }
 
-for await (const iterator of generate()) {
+generate.stop = kStop;
+
+for await (const iterator of generate(index =>
+  index === 15 ? generate.stop : null
+)) {
   console.log(iterator);
 }
+
+const person = {
+  name: 'And',
+  ...(false && { age: 23 }),
+};
+
+console.log({ person });
