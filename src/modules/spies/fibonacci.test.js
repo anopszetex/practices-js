@@ -33,6 +33,7 @@ import assert from 'node:assert';
     const fibonacci = new Fibonacci();
     const spy = sinon.spy(fibonacci, fibonacci.execute.name);
 
+    // eslint-disable-next-line no-unused-vars
     for (const some of fibonacci.execute(3)) {
     }
 
