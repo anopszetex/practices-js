@@ -55,4 +55,4 @@ const binSearch = (arr, left, right, value) => {
 const first = 0;
 const last = arr.length - 1;
 
-assert.deepStrictEqual(binSearch(arr, first, last, 12), 12);
+assert.deepStrictEqual(binSearch(arr, first, last, 3), 3);
