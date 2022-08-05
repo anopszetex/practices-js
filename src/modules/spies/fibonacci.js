@@ -13,6 +13,10 @@ export default class Fibonacci {
 
     yield current;
     yield* this.execute(input - 1, next, current + next);
+    // [3] => execute(3, 0, 1) => 0
+    // [2] => execute(2, 1, 1) => 1
+    // [1] => execute(1, 1, 2) => 1
+    // [0] => execute(0, 2, 3) => undefined
   }
 
   sync() {
