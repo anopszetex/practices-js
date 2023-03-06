@@ -8,7 +8,7 @@
     "bench-climem": "CLIMEM=8999 node -r climem src/index.js",
     "climem": "climem 8999",
     "bench-flame": "0x -o -- node src/index.js",
-    "clinic-doctor": "clinic doctor -- node event-loop.js",
+    "clinic-doctor": "clinic doctor -- node src/event-loop.js",
     "clinic-flame": "clinic flame -- node src/index.js",
     "clinic-heapprofile": "clinic heapprofile -- node src/index.js",
     "clinic-bubbleprof": "clinic bubbleprof -- node src/index.js",
