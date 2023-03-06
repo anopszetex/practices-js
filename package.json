@@ -5,6 +5,13 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "bench-climem": "CLIMEM=8999 node -r climem src/index.js",
+    "climem": "climem 8999",
+    "bench-flame": "0x -o -- node src/index.js",
+    "clinic-doctor": "clinic doctor -- node event-loop.js",
+    "clinic-flame": "clinic flame -- node src/index.js",
+    "clinic-heapprofile": "clinic heapprofile -- node src/index.js",
+    "clinic-bubbleprof": "clinic bubbleprof -- node src/index.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --config ./jest.config.js --watchAll",
     "test:watch": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand --config ./jest.config.js --watch",
     "test:nyc": "NODE_OPTIONS=--experimental-vm-modules npx nyc jest --runInBand --config ./jest.config.js",
