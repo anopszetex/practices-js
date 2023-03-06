@@ -13,9 +13,7 @@ async function main() {
 
   const executionTime = performance.now() - timerStart;
 
-  console.log(
-    `Tempo de execução: ${new Intl.NumberFormat().format(executionTime)}ms`
-  );
+  console.log(`Elapsed: ${new Intl.NumberFormat().format(executionTime)}ms`);
 }
 
 main();
